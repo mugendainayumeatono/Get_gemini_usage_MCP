@@ -56,11 +56,18 @@ chmod +x run_docker.sh run_test_docker.sh
 **环境变量与凭据配置 (.env):**
 
 建议在项目根目录下创建一个 `.env` 文件。脚本启动时会自动加载 `.env` 中的环境变量。
-例如，要配置具体的 JSON 密钥文件路径，可以在 `.env` 中添加：
+
 ```ini
+# [必须设定] 用于 Google Cloud 认证的密钥文件路径
+# 这是服务正常运行所必需的凭证。
 GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/service-account-file.json
+
+# [测试可选] 用于集成测试的目标项目 ID
+# 为了在测试时能够更加灵活、方便地切换目标项目，而无需修改测试源代码，
+# run_test_docker.sh 脚本会读取该变量并传递给测试容器。
+TEST_PROJECT_ID=your-gcp-project-id
 ```
-这样你无需修改任何脚本，就可以在不同凭据之间无缝切换。
+这种方式让你只需修改 `.env` 配置文件，即可在不同环境间无缝切换。
 
 **调试模式:**
 
