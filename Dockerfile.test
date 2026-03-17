@@ -1,0 +1,11 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt pytest pytest-asyncio httpx sse_starlette
+
+COPY mcp_server.py .
+COPY test/ ./test/
+
+ENTRYPOINT ["pytest", "test/test_mcp_server.py", "test/test_mcp_integration.py", "-v", "-s"]

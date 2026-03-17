@@ -1,0 +1,6 @@
+mcp
+fastmcp
+google-cloud-monitoring
+google-cloud-bigquery
+google-auth
+google-cloud-aiplatform
