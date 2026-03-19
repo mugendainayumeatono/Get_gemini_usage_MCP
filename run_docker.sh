@@ -20,13 +20,13 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # 检查镜像是否存在，如果不存在或者需要强制构建则执行构建
-if [[ "$FORCE_BUILD" == true ]] || [[ "$(sudo docker images -q $IMAGE_NAME 2> /dev/null)" == "" ]]; then
+if [[ "$FORCE_BUILD" == true ]] || [[ "$(docker images -q $IMAGE_NAME 2> /dev/null)" == "" ]]; then
   # 生成基于时间戳的版本号，如 v20240501-123456
   VERSION="v$(date +%Y%m%d-%H%M%S)"
   echo "正在构建镜像 $IMAGE_NAME:$VERSION ..."
   # 添加 --no-cache 确保每次强制构建都是干净的（可选，这里保持普通构建）
   # 同时打上 latest 和具体的版本号 tag
-  sudo docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$VERSION .
+  docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$VERSION .
   echo "镜像构建完成，已标记为 latest 和 $VERSION"
 fi
 
@@ -60,7 +60,7 @@ echo "正在启动 MCP 服务器容器 (Streamable HTTP 模式)..."
 # 启动容器
 # 将凭据文件挂载到容器内的固定位置，映射端口，并设置环境变量
 # 同时传递 TEST_PROJECT_ID 如果它在 .env 中设置了
-sudo docker run $DOCKER_DAEMON_FLAG -p 8000:8000 --rm \
+docker run $DOCKER_DAEMON_FLAG -p 8000:8000 --rm \
   -v "$CREDENTIALS_FILE:/app/credentials.json:ro" \
   -e GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json \
   -e TEST_PROJECT_ID="$TEST_PROJECT_ID" \

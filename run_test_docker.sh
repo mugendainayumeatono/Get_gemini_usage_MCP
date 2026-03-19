@@ -21,8 +21,8 @@ fi
 
 # 构建测试 Docker 镜像
 echo "正在构建测试镜像 ${IMAGE_NAME}:${VERSION} ..."
-sudo docker build -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${VERSION} -f Dockerfile.test .
+docker build -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${VERSION} -f Dockerfile.test .
 
 # 在容器中运行测试
 echo "正在 Docker 容器中运行测试 (${IMAGE_NAME}:latest)..."
-sudo docker run --rm --network host -e TEST_PROJECT_ID="$TEST_PROJECT_ID" ${IMAGE_NAME}:latest
+docker run --rm --network host -e TEST_PROJECT_ID="$TEST_PROJECT_ID" ${IMAGE_NAME}:latest
