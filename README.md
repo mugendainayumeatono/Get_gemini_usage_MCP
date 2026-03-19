@@ -129,3 +129,20 @@ python mcp_server.py
 您可以通过 `list_token_metrics` 工具实时列出当前项目可用的所有具体指标路径。
 
 **注意**: Cloud Monitoring API 提供的指标数据主要用于实时监控和配额查看，可能与最终的结算账单（Billing）存在微小差异。如需最精确的计费数据，请参考本工具提供的 BigQuery 账单查询功能。
+
+## 人工记载
+
+部署后，可以使用curl测试mcp服务是否正常
+
+使用如下命令
+
+SESSION_ID=$(curl -s -i -m 1 -H "Accept: text/event-stream" http://localhost:8000/mcp | grep -i "mcp-session-id" | awk '{print $2}' | tr -d '\r') && \
+echo "Session ID: $SESSION_ID" && \
+curl -X POST    -H "Content-Type: application/json"    -H "Accept: application/json, text/event-stream"    -H "mcp-session-id: $SESSION_ID"\
+    -d '{"jsonrpc": "2.0", "method": "initialize", "id": 1,"params": {"protocolVersion": "2024-11-05","capabilities": {},"clientInfo": { "name": "test-client", "version": "1.0" }}}'\
+    http://localhost:8000/mcp
+
+应该会得到类似下面这样的结果
+Session ID: 752f9d721e1d47cca1b7d06cad94a0b7
+event: message
+data: {"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2024-11-05","capabilities":{"experimental":{},"prompts":{"listChanged":true},"resources":{"subscribe":false,"listChanged":true},"tools":{"listChanged":true},"extensions":{"io.modelcontextprotocol/ui":{}}},"serverInfo":{"name":"google-token-usage","version":"3.1.1"}}}
