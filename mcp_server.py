@@ -249,8 +249,8 @@ if __name__ == "__main__":
     if os.environ.get("MCP_DEBUG") == "true":
         debug_credentials()
     
-    # Allow overriding transport via environment variable, default to sse for network access
-    transport = os.environ.get("FASTMCP_TRANSPORT", "sse")
+    # Allow overriding transport via environment variable, default to streamable-http for network access
+    transport = os.environ.get("FASTMCP_TRANSPORT", "streamable-http")
     port = int(os.environ.get("PORT", 8000))
     host = os.environ.get("HOST", "0.0.0.0")
     

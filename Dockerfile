@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY mcp_server.py .
 COPY test/ ./test/
 
-# 暴露端口（SSE 模式需要）
+# 暴露端口（Streamable HTTP 模式需要）
 EXPOSE 8000
 
 # 运行 MCP 服务器

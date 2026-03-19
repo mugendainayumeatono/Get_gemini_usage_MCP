@@ -55,12 +55,14 @@ if [ ! -f "$CREDENTIALS_FILE" ]; then
   exit 1
 fi
 
-echo "正在启动 MCP 服务器容器 (SSE HTTP 模式)..."
+echo "正在启动 MCP 服务器容器 (Streamable HTTP 模式)..."
 
 # 启动容器
 # 将凭据文件挂载到容器内的固定位置，映射端口，并设置环境变量
+# 同时传递 TEST_PROJECT_ID 如果它在 .env 中设置了
 sudo docker run $DOCKER_DAEMON_FLAG -p 8000:8000 --rm \
   -v "$CREDENTIALS_FILE:/app/credentials.json:ro" \
   -e GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json \
+  -e TEST_PROJECT_ID="$TEST_PROJECT_ID" \
   $DEBUG_MODE \
   $IMAGE_NAME
