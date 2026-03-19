@@ -139,9 +139,9 @@ python mcp_server.py
 ```
 SESSION_ID=$(curl -s -i -m 1 -H "Accept: text/event-stream" http://localhost:8000/mcp | grep -i "mcp-session-id" | awk '{print $2}' | tr -d '\r') && \
 echo "Session ID: $SESSION_ID" && \
-curl -X POST    -H "Content-Type: application/json"    -H "Accept: application/json, text/event-stream"    -H "mcp-session-id: $SESSION_ID"\
-    -d '{"jsonrpc": "2.0", "method": "initialize", "id": 1,"params": {"protocolVersion": "2024-11-05","capabilities": {},"clientInfo": { "name": "test-client", "version": "1.0" }}}'\
-    http://localhost:8000/mcp
+curl -X POST    -H "Content-Type: application/json"    -H "Accept: application/json, text/event-stream"    -H "mcp-session-id: $SESSION_ID" \
+-d '{"jsonrpc": "2.0", "method": "initialize", "id": 1,"params": {"protocolVersion": "2024-11-05","capabilities": {},"clientInfo": { "name": "test-client", "version": "1.0" }}}' \
+http://localhost:8000/mcp
 ```
 
 应该会得到类似下面这样的结果
